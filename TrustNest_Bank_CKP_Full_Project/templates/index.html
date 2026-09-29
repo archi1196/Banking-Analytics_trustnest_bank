@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrustNest Bank by CKP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <main>
+    <!-- Welcome screen -->
+    <section id="welcome" class="screen welcome-screen active">
+      <div class="welcome-glow glow-one"></div>
+      <div class="welcome-glow glow-two"></div>
+      <div class="welcome-card">
+        <div class="brand-mark">TN</div>
+        <p class="eyebrow reveal delay-1">CKP • BANKING ANALYTICS SYSTEM</p>
+        <h1 class="reveal delay-2">Welcome to <span>TrustNest Bank</span> by CKP</h1>
+        <p class="welcome-copy reveal delay-3">
+          A simple, modern banking analytics experience for customer management,
+          financial insights and academic loan prediction.
+        </p>
+        <button class="primary-btn reveal delay-4" onclick="showHome()">Get Started <span>→</span></button>
+        <div class="student-strip reveal delay-5">
+          <span>BE Computer Engineering</span>
+          <span>•</span>
+          <span>GTU CIPAT Project</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Home / three options -->
+    <section id="home" class="screen">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark small">TN</div>
+          <div>
+            <strong>TRUSTNEST</strong>
+            <small>Bank by CKP</small>
+          </div>
+        </div>
+        <div class="topbar-pill">Banking Analytics System</div>
+      </header>
+
+      <div class="container home-container">
+        <div class="hero-copy">
+          <p class="eyebrow">WELCOME TO TRUSTNEST</p>
+          <h2>Banking made <span>simple.</span><br>Analytics made useful.</h2>
+          <p>Choose how you want to continue. Staff get the full analytics workspace, customers can access their account, or new users can try the academic loan prediction module.</p>
+        </div>
+
+        <div class="option-grid">
+          <button class="option-card staff" onclick="openPanel('staff')">
+            <div class="icon">♙</div>
+            <div>
+              <span class="card-kicker">01 · MANAGEMENT</span>
+              <h3>Staff Login</h3>
+              <p>Customer management, analytics, statistics, visualization, web scraping and ML.</p>
+            </div>
+            <span class="arrow">↗</span>
+          </button>
+
+          <button class="option-card customer" onclick="openPanel('customer')">
+            <div class="icon">◉</div>
+            <div>
+              <span class="card-kicker">02 · PERSONAL</span>
+              <h3>Customer Login</h3>
+              <p>View profile, account and loan details and use loan prediction.</p>
+            </div>
+            <span class="arrow">↗</span>
+          </button>
+
+          <button class="option-card new" onclick="openPanel('new')">
+            <div class="icon">＋</div>
+            <div>
+              <span class="card-kicker">03 · PREDICTION</span>
+              <h3>New Customer</h3>
+              <p>No bank account required. Enter details and try the academic loan prediction.</p>
+            </div>
+            <span class="arrow">↗</span>
+          </button>
+        </div>
+
+        <footer class="footer">
+          <div>
+            <strong>Project by</strong>
+            <span>Archi Patel · Yesha Chevli · Tisha Patel · Isha Patel</span>
+          </div>
+          <div>
+            <strong>College</strong>
+            <span>C. K. Pithawala College of Engineering and Technology · Department of Computer Engineering</span>
+          </div>
+        </footer>
+      </div>
+    </section>
+
+    <!-- Modal / forms -->
+    <div id="panel" class="panel-backdrop" onclick="closePanel(event)">
+      <div class="panel" onclick="event.stopPropagation()">
+        <button class="close" onclick="closePanel()">×</button>
+
+        <div id="staffPanel" class="panel-content">
+          <p class="eyebrow">01 · STAFF ACCESS</p>
+          <h2>Welcome back, <span>staff.</span></h2>
+          <p class="muted">Sign in to open the TrustNest management dashboard.</p>
+          <form onsubmit="staffLogin(event)">
+            <label>Username<input id="staffUser" required placeholder="e.g. amit.admin"></label>
+            <label>Password<input id="staffPass" required type="password" placeholder="Enter password"></label>
+            <button class="primary-btn full">Sign in <span>→</span></button>
+            <p id="staffMsg" class="form-msg"></p>
+          </form>
+          <div class="demo-note">Demo staff: <b>amit.admin</b> / <b>Bank@1001</b></div>
+        </div>
+
+        <div id="customerPanel" class="panel-content">
+          <p class="eyebrow">02 · CUSTOMER ACCESS</p>
+          <h2>Your banking, <span>your view.</span></h2>
+          <p class="muted">Use your Banking ID and customer password.</p>
+          <form onsubmit="customerLogin(event)">
+            <label>Banking ID<input id="customerId" required placeholder="e.g. CKP200001"></label>
+            <label>Password<input id="customerPass" required type="password" placeholder="Customer password"></label>
+            <button class="primary-btn full">Open customer portal <span>→</span></button>
+            <p id="customerMsg" class="form-msg"></p>
+          </form>
+          <div class="demo-note">Use a valid Banking ID and password from your Customers sheet.</div>
+        </div>
+
+        <div id="newPanel" class="panel-content">
+          <p class="eyebrow">03 · LOAN PREDICTION</p>
+          <h2>Try the <span>prediction.</span></h2>
+          <p class="muted">No bank account is required. This is an academic ML prediction.</p>
+          <form onsubmit="newPrediction(event)" class="prediction-form">
+            <div class="two-col">
+              <label>Age<input id="age" type="number" min="18" max="100" value="30" required></label>
+              <label>Gender<select id="gender"><option>Male</option><option>Female</option></select></label>
+              <label>Married<select id="married"><option>Yes</option><option>No</option></select></label>
+              <label>Dependents<input id="dependents" value="1" required></label>
+              <label>Education<select id="education"><option>Graduate</option><option>Not Graduate</option></select></label>
+              <label>Employment Status<input id="employment" value="Salaried" required></label>
+              <label>Self Employed<select id="selfEmployed"><option>No</option><option>Yes</option></select></label>
+              <label>Annual Income<input id="income" type="number" value="800000" required></label>
+              <label>Credit Score<input id="credit" type="number" value="750" required></label>
+              <label>Account Type<input id="accountType" value="Savings" required></label>
+              <label>Account Balance<input id="balance" type="number" value="300000" required></label>
+              <label>Existing Loan<select id="existingLoan"><option>No</option><option>Yes</option></select></label>
+              <label>Property Area<select id="property"><option>Urban</option><option>Semiurban</option><option>Rural</option></select></label>
+              <label>Loan Amount<input id="loanAmount" type="number" value="1000000" required></label>
+              <label>Loan Term (Years)<input id="loanTerm" type="number" value="10" required></label>
+            </div>
+            <button class="primary-btn full">Predict Loan <span>→</span></button>
+            <div id="predictionResult" class="prediction-result"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard placeholder after login -->
+    <section id="dashboard" class="screen dashboard-screen">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark small">TN</div>
+          <div><strong>TRUSTNEST</strong><small>Bank by CKP</small></div>
+        </div>
+        <button class="ghost-btn" onclick="showHome()">Logout</button>
+      </header>
+      <div class="container dashboard">
+        <div class="dash-heading">
+          <div>
+            <p class="eyebrow" id="dashType">STAFF DASHBOARD</p>
+            <h2 id="dashTitle">Banking Analytics Overview</h2>
+            <p>Monitor the project data and access your banking modules.</p>
+          </div>
+          <div class="date-pill">Academic Project · 2026</div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric blue"><small>Total Customers</small><strong>20,000</strong><span>Customer dataset</span></div>
+          <div class="metric"><small>Approved Loans</small><strong>13,167</strong><span>65.84% approval rate</span></div>
+          <div class="metric"><small>Average Credit</small><strong>684.8</strong><span>Credit score</span></div>
+          <div class="metric"><small>ML Accuracy</small><strong>83.08%</strong><span>Logistic Regression</span></div>
+        </div>
+
+        <div class="dash-grid">
+          <div class="module-card">
+            <div class="module-head"><span>01</span><h3>Customer Management</h3></div>
+            <p>Add, search, update and delete customer records.</p>
+          </div>
+          <div class="module-card">
+            <div class="module-head"><span>02</span><h3>Data Preprocessing</h3></div>
+            <p>Missing values, duplicates, outliers and normalization.</p>
+          </div>
+          <div class="module-card">
+            <div class="module-head"><span>03</span><h3>Banking Analytics</h3></div>
+            <p>Loan status, credit risk, income and account analysis.</p>
+          </div>
+          <div class="module-card">
+            <div class="module-head"><span>04</span><h3>Statistics & Probability</h3></div>
+            <p>Descriptive statistics, sampling, inference and hypothesis testing.</p>
+          </div>
+          <div class="module-card">
+            <div class="module-head"><span>05</span><h3>Visualization</h3></div>
+            <p>Charts and correlation views for banking data.</p>
+          </div>
+          <div class="module-card highlight">
+            <div class="module-head"><span>06</span><h3>Loan Prediction</h3></div>
+            <p>Logistic Regression based academic prediction.</p>
+            <button class="small-btn" onclick="openPanel('new')">Try prediction →</button>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div><strong>Project by</strong><span>Archi Patel · Yesha Chevli · Tisha Patel · Isha Patel</span></div>
+          <div><strong>C. K. Pithawala College of Engineering and Technology</strong><span>Department of Computer Engineering</span></div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
